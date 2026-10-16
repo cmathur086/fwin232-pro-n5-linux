@@ -1,0 +1,17 @@
+[Unit]
+Description=Silead touch translator (calibrated virtual touchscreen)
+Documentation=file:/opt/fwin232/README.md
+
+[Service]
+Type=simple
+# Set SILEAD_DEV if your input device is not named "silead_ts"
+# (check: grep -A1 'Name=' /proc/bus/input/devices)
+Environment=SILEAD_DEV=silead_ts
+ExecStart=/usr/bin/python3 -u /opt/fwin232/silead_translate.py
+Restart=always
+RestartSec=2
+StandardOutput=append:/var/log/silead-translate.log
+StandardError=append:/var/log/silead-translate.log
+
+[Install]
+WantedBy=multi-user.target

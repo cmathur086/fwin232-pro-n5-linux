@@ -1,0 +1,10 @@
+# Keep libinput/X away from the uncalibrated PHYSICAL silead device, so that only
+# the calibrated uinput device (silead_ts_calibrated) drives the pointer.
+#
+# The match is on the exact name, so the virtual device is unaffected. This only
+# affects libinput - silead_translate.py reads the kernel node directly and keeps
+# working.
+#
+# Change "silead_ts" here if your device has a different name (the same name you
+# put in SILEAD_DEV for the service).
+ACTION=="add|change", KERNEL=="event*", ATTRS{name}=="silead_ts", ENV{LIBINPUT_IGNORE_DEVICE}="1"
